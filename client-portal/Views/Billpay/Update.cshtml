@@ -1,0 +1,38 @@
+@model a2.Models.BillPay
+@{
+    ViewData["Title"] = "Update BillPay";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BillPayID" />
+
+            <div class="form-group">
+
+                <label for="date" class="control-label">Transfer Date</label>
+                <input type="date" id="date" name="ScheduledTimeUtc" required>
+
+                <label for="time" class="control-label">Transfer Time</label>
+                <input type="time" id="time" name="time">
+
+             
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" value="@ViewBag.Amount?.ToString("0.00")" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+
+                <label asp-for="Period" class="control-label"></label>
+                <input asp-for="Period" class="form-control" value="@Model.Period" disabled/>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Details" class="btn btn-secondary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

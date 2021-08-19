@@ -1,0 +1,68 @@
+﻿@model IEnumerable<a2.Models.BillPay>
+@using a2.Utilities
+
+@{
+    ViewData["Title"] = "BillPay";
+}
+
+<div class="cols-md-4">
+    <h3>BillPay Service</h3>
+    <p>Below are links to add a new Payee or make a payment to an existing payee.</p>
+    <a asp-action="AddPayee" class="underline">Add Payee</a>
+    <br>
+    <a asp-action="AddPayment" class="underline">Add Payment</a>
+    <div>
+
+        <div class="cols-md-4 pt-5">
+            <h3>Your Active Payments</h3>
+            <table class="table">
+                <tr>
+                    <th>Account</th>
+                    <th>Payee ID</th>
+                    <th>Amount</th>
+                    <th>Scheduled Payment Date</th>
+                    <th>Payment Period</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                <tr>
+                    @foreach (var payment in Model)
+                    {
+                        @if(@payment.Failed) 
+                         {
+                        @: <div class="alert alert-warning" role="alert">
+                        @:    Error with automatic payment.
+                        @: </div>
+                        @:   <tr style="background-color: red !important;">
+                         }
+                        @if(@payment.PaymentLocked) 
+                         {
+                        @: <div class="alert alert-info" role="alert">
+                        @:    Payment has been locked by an Administrator.
+                        @: </div>
+                        @:   <tr style="background-color: yellow !important;">
+                         } 
+                        else 
+                        {
+                        @:   <tr>
+                        }
+                        <td>@payment.AccountNumber</td>
+                        <td>@payment.PayeeID</td>
+                        <td>$@MiscellaneousExtensionUtilities.RoundDecimal(@payment.Amount)</td>
+                        <td>@payment.ScheduledTimeUtc.ToLocalTime()</td>
+                        <td>@payment.Period</td>
+                        <td><a class="btn btn-secondary" asp-action="Delete" asp-route-id="@payment.BillPayID">Cancel</a></td>
+                        @if(@payment.PaymentLocked)
+                        {
+                            <td><a class="btn btn-secondary disabled">Update</a></td>    
+                        }
+                        else
+                        {
+                            <td><a class="btn btn-secondary" asp-action="Update" asp-route-id="@payment.BillPayID">Update</a></td>
+                        }
+                        
+                   @: </tr>
+                    }
+            </table>
+        </div>

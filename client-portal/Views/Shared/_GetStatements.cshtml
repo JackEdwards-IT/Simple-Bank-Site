@@ -1,0 +1,59 @@
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@model IPagedList<a2.Models.Transaction>
+@using a2.Utilities
+
+
+<script src="@Url.Content("~/lib/jquery/dist/jquery.ajax-unobtrusive.js")" type="text/javascript"></script>
+
+<appSettings>
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+</appSettings>
+
+<div class="cols-md-12">
+    <table class="table">
+        <tr>
+            <th>Transaction ID</th>
+            <th>Account Number</th>
+            <th>Transaction Type</th>
+            <th>Amount</th>
+            <th>Destination Account</th>
+            <th>Comment</th>
+            <th>Transaction Time</th>
+        </tr>
+
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.TransactionID</td>
+                <td>@transaction.AccountNumber</td>
+                <td>@transaction.TransactionType</td>
+
+                @if (@transaction.TransactionType == 'W' || @transaction.TransactionType == 'B' || @transaction.TransactionType == 'T' &&
+               @transaction.DestinationAccountNumber > 0)
+                {
+                    <td style="color:red !important;">$@MiscellaneousExtensionUtilities.RoundDecimal(@transaction.Amount)</td>
+                }
+                else
+                {
+                    <td style="color:green !important;">$@MiscellaneousExtensionUtilities.RoundDecimal(@transaction.Amount)</td>
+                }
+                <td>@transaction.DestinationAccountNumber</td>
+                <td>@transaction.Comment</td>
+                <td>@transaction.TransactionTimeUtc.ToLocalTime()</td>
+            </tr>
+        }
+    </table>
+    @{
+            int accountNumber = @ViewBag.accountNumber;
+        }
+        @Html.PagedListPager(Model, page => Url.Action("GetStatements", new { accountNumber, page }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+        new PagedListRenderOptions {
+        LiElementClasses = new[] { "page-item"},
+        PageClasses = new[] { "page-link" } },
+        new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "transactions"}))
+
+</div>

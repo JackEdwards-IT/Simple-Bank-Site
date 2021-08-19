@@ -1,0 +1,70 @@
+@using a2.Utilities
+
+@model dynamic
+
+@{
+    ViewData["Title"] = "Add BillPay Payment";
+}
+
+<div>
+    <h3>Bill Pay Payment</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddPayment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="id" class="control-label">Select account to debit</label>
+                <select name="accountID" class="block" required>
+                    <option disabled selected>Account</option>
+                    @foreach (var account in Model.Accounts)
+                        {
+                            <option name="id" value="@account.AccountNumber">@account.AccountNumber | @account.AccountType |
+                                $@MiscellaneousExtensionUtilities.RoundDecimal(@account.Balance)
+                                </option>
+                        }
+                        @Html.ValidationMessage("id", new { @class = "text-danger" })
+                    </select>
+
+                <label for="id" class="control-label">Payee</label>
+                <select name="payeeID" class="block" required>
+                    <option disabled selected>Select Payee</option>
+                    @foreach (var payee in Model.Payees)
+                    {
+                        <option name="payeeID" value="@payee.PayeeID">@payee.Name</option>
+                    }
+                    @Html.ValidationMessage("id", new { @class = "text-danger" })
+                </select>
+
+                <label for="Amount" class="control-label">Amount</label>
+                <input id="Amount" name="Amount" class="form-control" value="@ViewBag.Amount?.ToString("0.00")"
+                    data-val="true" data-val-number="The field Amount must be a number."
+                    data-val-required="The Amount field is required." />
+                @Html.ValidationMessage("Amount", new { @class = "text-danger" })
+
+                <select name="period" class="block" required>
+                    <option disabled selected>Select Period</option>
+                    <option name="period" value='O'>One Off</option>
+                    <option name="period" value='M'>Monthly</option>
+                    <option name="period" value='Q'>Quarterly</option>
+                    <option name="period" value='A'>Annually</option>
+                </select>
+
+                <label for="date" class="control-label">Transfer Date</label>
+                <input type="date" id="date" name="ScheduledTimeUtc" required>
+
+                <label for="time" class="control-label">Transfer Time</label>
+                <input type="time" id="time" name="time">
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Schedule Payment" class="btn btn-secondary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,29 @@
+﻿@using a2.Utilities
+@model IEnumerable<a2.Models.AccountViewModel>
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<div class="cols-md-4">
+    <h3>Your Accounts</h3>
+    <table class="table">
+        <tr>
+            <th>Account Number</th>
+            <th>Account Type</th>
+            <th>Balance</th>
+            <th></th>
+        </tr>
+
+        <tr>
+            @foreach (var account in Model)
+            {
+            <tr>
+                <td>@account.AccountNumber</td>
+                <td>@account.AccountType</td>
+                <td>$@MiscellaneousExtensionUtilities.RoundDecimal(@account.Balance)</td>
+                <td><a class="btn btn-secondary" asp-action="Deposit" asp-route-id="@account.AccountNumber">Deposit</a>
+                </td>
+            </tr>
+            }
+    </table>
+</div>

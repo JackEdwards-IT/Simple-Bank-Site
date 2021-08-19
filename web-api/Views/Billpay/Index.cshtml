@@ -1,0 +1,85 @@
+@using a2.admin.Models
+@model IEnumerable<BillPayDto>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BillPayID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduledTimeUtc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Period)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Failed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentLocked)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillPayID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduledTimeUtc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Period)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Failed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaymentLocked)
+                </td>
+                <td>
+                    @if (item.PaymentLocked)
+                    {
+                        <a asp-action="UnlockAccount" asp-route-id="@item.BillPayID">Unlock Payment</a>
+                    }
+                    else
+                    {
+                        <a asp-action="LockAccount" asp-route-id="@item.BillPayID">Lock Payment</a>
+                    }
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

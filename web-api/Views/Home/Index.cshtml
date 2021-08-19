@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div>
+    <h3>MCBA Admin Portal</h3>
+
+    @{
+        var isLoggedIn = Context.Session.GetString("Name");
+    }
+    @if (isLoggedIn == "admin")
+    {
+        <p class="font-weight-bold">
+            Hi Admin, thanks for using MCBA Admin Portal.
+        </p>
+        <ul class="nav">
+        <a class="nav-link white" asp-controller="Customer" asp-action="Index">Accounts</a>
+        <a class="nav-link white" asp-controller="Login" asp-action="Logout">Logout</a>
+        </ul>
+    }
+    else
+    {
+        <a class="nav-link white" asp-controller="Login" asp-action="Login">Login</a>
+    }
+
+    <img src="~/img/admin.png" class="img-fluid mx-auto" alt="Admin Logo">
+
+</div>

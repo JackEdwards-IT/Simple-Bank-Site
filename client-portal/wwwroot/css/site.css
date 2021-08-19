@@ -1,0 +1,103 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+.caret{
+  border-top: 4px solid;
+  }
+  
+.btn-primary {
+  color: #fff;
+  background-color: green;
+  border-color: green;
+}
+.underline{
+  text-decoration: underline !important;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: green;
+  border-color: green;
+}
+
+.navbar-custom {
+  color: #1748C8;
+}
+a {
+  color: white;
+}
+a:hover{
+  color:#FFD234 !important;
+}
+.gold {
+  color: #FFD234 !important;
+}
+.white, p, h1, h2, h3, h4 {
+  color: #fff;
+}
+
+/* Tables */
+table td, .table th {
+  border-top: 1px solid #FFD234 !important;
+}
+td, th {
+  color: white !important;
+}
+.control-label {
+  color: white !important;
+}
+.block{
+  display: block;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 2px solid black !important;
+}
+.border-bottom {
+  border-bottom: 2px solid black;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  background: #173395;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}

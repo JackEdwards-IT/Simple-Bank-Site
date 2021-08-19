@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Http
+@using a2.Models
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div>
+    <h1 class="display-4 gold">Most Common Bank of Australia</h1>
+    <h3>Zero interest and high fees guaranteed</h3>
+
+    <p class="mt-10">MCBA is proudly Australian owned and operated since 2021.
+    We try to go above and beyond to meet your banking needs.</p>
+
+    @{
+        var isLoggedIn = Context.Session.GetInt32(nameof(Customer.CustomerID)).HasValue;
+    }
+    @if (isLoggedIn)
+    {
+        <p class="font-weight-bold">
+            Hi @Context.Session.GetString(nameof(Customer.Name)), thanks for using MCBA.
+        </p>
+        <ul class="nav">
+        <a class="nav-link white underline" asp-controller="Customer" asp-action="Index">Accounts</a>
+        <a class="nav-link white underline" asp-controller="Login" asp-action="Logout">Logout</a>
+        </ul>
+    }
+    else
+    {
+        <a class="nav-link white underline" asp-controller="Login" asp-action="Login">Login</a>
+    }
+
+    <img src="~/img/logo-lrg.png" class="img-fluid mx-auto" alt="Bank Logo">
+
+</div>
